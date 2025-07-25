@@ -669,34 +669,6 @@
         });
     </script>
 <script>
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKLbRsirFc9XNFHqPEbN_0JGaTJzxWkdVX1Gjb7bC2YguiNXYo5nu15df/pub?gid=0&single=true&output=csv")
-  .then(response => response.text())
-  .then(text => {
-    const lines = text.split('\n').slice(1);
-    const container = document.querySelector('.products-grid');
-
-    // 🧹 Vider les produits déjà présents
-    container.innerHTML = "";
-
-    lines.forEach(line => {
-      const [emoji, titre, description, Prix, Commande] = line.split(',');
-
-      if (emoji && titre && description && Prix && Commande) {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-          <div class="product-image">${emoji.trim()}</div>
-          <div class="product-content">
-            <h3 class="product-title">${titre.trim()}</h3>
-            <p class="product-description">${description.trim()}</p>
-            <p style="margin: 1rem 0; color: #6b5b4b; font-weight: bold;">${Prix.trim()} €</p>
-            <a href="${Commande.trim()}" target="_blank" class="cta-button" style="padding: 10px 25px; font-size: 0.9rem; text-transform: none;">Commander</a>
-          </div>
-        `;
-        container.appendChild(card);
-      }
-    });
-  });
 let produits = [];
 let panier = [];
 
@@ -761,7 +733,7 @@ function afficherPanier() {
   panier.forEach(p => {
     total += p.prix * p.quantite;
     panierDiv.innerHTML += `
-      <p><strong>${p.titre}</strong> x ${p.quantite} = ${p.prix.toFixed(2) * p.quantite} €</p>
+      <p><strong>${p.titre}</strong> x ${p.quantite} = ${(p.prix * p.quantite).toFixed(2)} €</p>
     `;
   });
 
@@ -779,6 +751,6 @@ function validerCommande() {
 </script>
 
 
-
+<section id="panier" class="container" style="margin-top: 40px;"></section>
 </body>
 </html>
