@@ -697,8 +697,6 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
       }
     });
   });
-</script>
-<script>
 let produits = [];
 let panier = [];
 
@@ -777,7 +775,9 @@ function validerCommande() {
   const message = encodeURIComponent(`Bonjour,%0D%0AVoici ma commande :%0D%0A${lignes}%0D%0ATotal : ${total} €`);
   window.location.href = `mailto:vinot.eric@gmail.com?subject=Commande Boutique Joséphine&body=${message}`;
 }
+
 </script>
+
 
 
 </body>
