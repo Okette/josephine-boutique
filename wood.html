@@ -9,20 +9,45 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #f9f3ec;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       color: #333;
     }
 
-    h1 {
+    header {
+      background-color: #6c4e36;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
       text-align: center;
+      padding: 30px 20px 10px;
+    }
+
+    h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
     }
 
     p.subtitle {
-      text-align: center;
       font-style: italic;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
     .products-grid {
@@ -31,6 +56,7 @@
       gap: 20px;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 20px;
     }
 
     .product-card {
@@ -52,70 +78,4 @@
     }
 
     .product-title {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-
-    .product-description {
-      font-size: 1rem;
-      color: #555;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #888;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>🌿 La Boutique de Joséphine</h1>
-  <p class="subtitle">Créations artisanales, nature et douceur</p>
-
-  <div class="products-grid">
-    <!-- Les produits seront injectés ici dynamiquement -->
-  </div>
-
-  <footer>
-    &copy; 2025 Joséphine - Créations locales
-  </footer>
-
-  <script>
-    // 🔁 Change ce lien par le tien si besoin
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKLbRsirFc9XNFHqPEbN_0JGaTJzxWkdVX1Gjb7bC2YguiNXYo5nu15df/pub?gid=0&single=true&output=csv";
-
-    fetch(sheetUrl)
-      .then(response => response.text())
-      .then(text => {
-        const lines = text.split('\n').slice(1); // Ignore l'en-tête
-        const container = document.querySelector('.products-grid');
-
-        // 🧹 Supprimer tous les produits précédents
-        container.innerHTML = "";
-
-        lines.forEach(line => {
-          const [emoji, titre, description] = line.split(',');
-
-          if (emoji && titre && description) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-              <div class="product-image">${emoji.trim()}</div>
-              <div class="product-content">
-                <h3 class="product-title">${titre.trim()}</h3>
-                <p class="product-description">${description.trim()}</p>
-              </div>
-            `;
-            container.appendChild(card);
-          }
-        });
-      })
-      .catch(error => {
-        console.error("Erreur lors du chargement des produits :", error);
-      });
-  </script>
-
-</body>
-</html>
+      fon
