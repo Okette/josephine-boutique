@@ -562,21 +562,21 @@
                         <span style="font-size: 1.8rem;">🏡</span>
                         <div>
                             <h4>Atelier</h4>
-                            <p>123 Rue des Créateurs<br>30170 Brignon, France</p>
+                            <p>123 Route de la Croix<br>17520 Germignac, France</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <span style="font-size: 1.8rem;">📞</span>
                         <div>
                             <h4>Téléphone</h4>
-                            <p>04 66 XX XX XX</p>
+                            <p>06 99 65 41 67</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <span style="font-size: 1.8rem;">💌</span>
                         <div>
                             <h4>Email</h4>
-                            <p>hello@laboutiquedejosephine.fr</p>
+                            <p>laboutiquedejosephine@gmail.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -600,7 +600,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 La Boutique de Joséphine. Créé avec amour. | Créations artisanales en bois découpé au laser</p>
+            <p>&copy; 2025 La Boutique de Joséphine. Créé avec Amour. | Créations artisanales en bois découpés au laser</p>
         </div>
     </footer>
 
@@ -677,9 +677,9 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
     container.innerHTML = "";
 
     lines.forEach(line => {
-      const [emoji, titre, description] = line.split(',');
+      const [emoji, titre, description, Prix, Lien commande] = line.split(',');
 
-      if (emoji && titre && description) {
+      if (emoji && titre && description && Prix && Lien commande) {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
