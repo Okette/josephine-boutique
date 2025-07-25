@@ -679,7 +679,7 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
     lines.forEach(line => {
       const [emoji, titre, description, Prix, Lien commande] = line.split(',');
 
-      if (emoji && titre && description && Prix && Lien commande) {
+      if (emoji && titre && description && prix && lienCommande) {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -687,6 +687,8 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
           <div class="product-content">
             <h3 class="product-title">${titre.trim()}</h3>
             <p class="product-description">${description.trim()}</p>
+            <p style="margin: 1rem 0; color: #6b5b4b; font-weight: bold;">${prix.trim()} €</p>
+            <a href="${lienCommande.trim()}" target="_blank" class="cta-button" style="padding: 10px 25px; font-size: 0.9rem; text-transform: none;">Commander</a>
           </div>
         `;
         container.appendChild(card);
