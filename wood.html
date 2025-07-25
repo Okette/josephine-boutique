@@ -698,6 +698,86 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
     });
   });
 </script>
+<script>
+let produits = [];
+let panier = [];
+
+// Charger les produits depuis Google Sheets
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKLbRsirFc9XNFHqPEbN_0JGaTJzxWkdVX1Gjb7bC2YguiNXYo5nu15df/pub?gid=0&single=true&output=csv")
+  .then(response => response.text())
+  .then(text => {
+    const lines = text.split('\n').slice(1);
+    produits = lines.map(line => {
+      const [emoji, titre, description, prix, lien] = line.split(',');
+      return {
+        emoji: emoji?.trim(), 
+        titre: titre?.trim(), 
+        description: description?.trim(), 
+        prix: parseFloat(prix?.trim()), 
+        lien: lien?.trim()
+      };
+    }).filter(p => p.titre && !isNaN(p.prix));
+    afficherProduits(produits);
+  });
+
+function afficherProduits(liste) {
+  const container = document.querySelector('.products-grid');
+  container.innerHTML = "";
+
+  liste.forEach((produit, index) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <div class="product-image">${produit.emoji}</div>
+      <div class="product-content">
+        <h3 class="product-title">${produit.titre}</h3>
+        <p class="product-description">${produit.description}</p>
+        <p><strong>${produit.prix.toFixed(2)} €</strong></p>
+        <button onclick="ajouterAuPanier(${index})" class="cta-button">Ajouter au panier</button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function ajouterAuPanier(index) {
+  const item = produits[index];
+  const existant = panier.find(p => p.titre === item.titre);
+  if (existant) {
+    existant.quantite += 1;
+  } else {
+    panier.push({ ...item, quantite: 1 });
+  }
+  afficherPanier();
+}
+
+function afficherPanier() {
+  const panierDiv = document.getElementById("panier");
+  panierDiv.innerHTML = "<h2>🛒 Panier</h2>";
+
+  if (panier.length === 0) {
+    panierDiv.innerHTML += "<p>Votre panier est vide.</p>";
+    return;
+  }
+
+  let total = 0;
+  panier.forEach(p => {
+    total += p.prix * p.quantite;
+    panierDiv.innerHTML += `
+      <p><strong>${p.titre}</strong> x ${p.quantite} = ${p.prix.toFixed(2) * p.quantite} €</p>
+    `;
+  });
+
+  panierDiv.innerHTML += `<p><strong>Total : ${total.toFixed(2)} €</strong></p>`;
+  panierDiv.innerHTML += `<button onclick="validerCommande()" class="cta-button">Valider la commande</button>`;
+}
+
+function validerCommande() {
+  const lignes = panier.map(p => `${p.titre} x ${p.quantite} = ${p.prix.toFixed(2) * p.quantite} €`).join('%0D%0A');
+  const total = panier.reduce((sum, p) => sum + p.prix * p.quantite, 0).toFixed(2);
+  const message = encodeURIComponent(`Bonjour,%0D%0AVoici ma commande :%0D%0A${lignes}%0D%0ATotal : ${total} €`);
+  window.location.href = `mailto:vinot.eric@gmail.com?subject=Commande Boutique Joséphine&body=${message}`;
+}
+</script>
 
 
 </body>
