@@ -677,7 +677,7 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
     container.innerHTML = "";
 
     lines.forEach(line => {
-      const [emoji, titre, description, Prix, Lien commande] = line.split(',');
+      const [emoji, titre, description, Prix, Commande] = line.split(',');
 
       if (emoji && titre && description && Prix && Commande) {
         const card = document.createElement('div');
