@@ -4,7 +4,103 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Boutique de Joséphine - Créations délicates au laser</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f3ec;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #6c4e36;
+      padding: 10px 20px;
+      color: white;
+    }
+    nav.container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #6c4e36;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    .cta-button:hover {
+      background-color: #4e3624;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+    .product-image {
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+    .product-title {
+      font-size: 1.2rem;
+      margin: 10px 0 5px;
+    }
+    .product-description {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    form label {
+      display: block;
+      margin: 10px 0;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #6c4e36;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #4e3624;
+    }
+  </style>"UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Boutique de Joséphine - Créations délicates au laser</title>
+  
 </head>
 <body>
   <header>
@@ -29,9 +125,29 @@
 
   <section id="produits" class="container">
     <h2 class="section-title">Nos créations délicates</h2>
+    <div style="text-align:center; margin-bottom: 20px;">
+      <label for="tri">Trier par :</label>
+      <select id="tri">
+        <option value="">-- Choisir --</option>
+        <option value="prix-asc">Prix croissant</option>
+        <option value="prix-desc">Prix décroissant</option>
+        <option value="categorie">Catégorie</option>
+      </select>
+    </div>
     <div class="products-grid">
       <!-- Produits injectés dynamiquement -->
     </div>
+  </section>
+
+  <section id="commande" class="container">
+    <h2>Formulaire de commande personnalisé</h2>
+    <form id="form-commande" method="post" action="https://formspree.io/f/yourformid">
+      <label>Nom : <input type="text" name="nom" required></label><br>
+      <label>Email : <input type="email" name="email" required></label><br>
+      <label>Produit souhaité : <input type="text" name="produit"></label><br>
+      <label>Message complémentaire :<br><textarea name="message"></textarea></label><br>
+      <button type="submit">Envoyer la commande</button>
+    </form>
   </section>
 
   <section id="about" class="about"> ... </section>
@@ -39,30 +155,46 @@
   <footer> ... </footer>
 
   <script>
+    let produits = [];
+
+    function afficherProduits(liste) {
+      const container = document.querySelector('.products-grid');
+      container.innerHTML = "";
+
+      liste.forEach(produit => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${produit.image}" alt="${produit.titre}" style="width:100%; height:auto; border-radius:8px; margin-bottom:10px;">
+          <div class="product-image">${produit.emoji}</div>
+          <div class="product-content">
+            <h3 class="product-title">${produit.titre}</h3>
+            <p class="product-description">${produit.description}</p>
+            <p><strong>Prix : </strong>${produit.prix} €</p>
+            <a href="${produit.lien}" target="_blank" class="cta-button">Commander</a>
+          </div>`;
+        container.appendChild(card);
+      });
+    }
+
     fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKLbRsirFc9XNFHqPEbN_0JGaTJzxWkdVX1Gjb7bC2YguiNXYo5nu15df/pub?gid=0&single=true&output=csv")
       .then(response => response.text())
       .then(text => {
         const lines = text.split('\n').slice(1);
-        const container = document.querySelector('.products-grid');
-        container.innerHTML = "";
-
-        lines.forEach(line => {
-          const [emoji, titre, description, prix, lien] = line.split(',');
-          if (emoji && titre && description && prix && lien) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-              <div class="product-image">${emoji.trim()}</div>
-              <div class="product-content">
-                <h3 class="product-title">${titre.trim()}</h3>
-                <p class="product-description">${description.trim()}</p>
-                <p><strong>Prix : </strong>${prix.trim()} €</p>
-                <a href="${lien.trim()}" target="_blank" class="cta-button">Commander</a>
-              </div>`;
-            container.appendChild(card);
-          }
+        produits = lines.map(line => {
+          const [emoji, titre, description, prix, lien, image, categorie] = line.split(',');
+          return { emoji: emoji.trim(), titre: titre.trim(), description: description.trim(), prix: parseFloat(prix.trim()), lien: lien.trim(), image: image.trim(), categorie: categorie?.trim() || "" };
         });
+        afficherProduits(produits);
       });
+
+    document.getElementById('tri').addEventListener('change', function() {
+      let sorted = [...produits];
+      if (this.value === "prix-asc") sorted.sort((a, b) => a.prix - b.prix);
+      if (this.value === "prix-desc") sorted.sort((a, b) => b.prix - a.prix);
+      if (this.value === "categorie") sorted.sort((a, b) => a.categorie.localeCompare(b.categorie));
+      afficherProduits(sorted);
+    });
   </script>
 </body>
 </html>
