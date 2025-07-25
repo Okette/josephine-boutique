@@ -670,8 +670,11 @@
 fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKLbRsirFc9XNFHqPEbN_0JGaTJzxWkdVX1Gjb7bC2YguiNXYo5nu15df/pub?gid=0&single=true&output=csv")
   .then(response => response.text())
   .then(text => {
-    const lines = text.split('\n').slice(1); // ignore les en-têtes
+    const lines = text.split('\n').slice(1);
     const container = document.querySelector('.products-grid');
+
+    // 🧹 Vider les produits déjà présents
+    container.innerHTML = "";
 
     lines.forEach(line => {
       const [emoji, titre, description] = line.split(',');
@@ -691,7 +694,6 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
     });
   });
 </script>
-
 
 
 </body>
