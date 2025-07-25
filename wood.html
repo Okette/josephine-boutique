@@ -487,39 +487,10 @@
         </div>
     </section>
 
-    <section id="produits" class="container">
-        <h2 class="section-title">Nos créations délicates</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">🌺</div>
-                <div class="product-content">
-                    <h3 class="product-title">Décorations murales fleuries</h3>
-                    <p class="product-description">Panneaux muraux aux motifs botaniques délicats, créant une atmosphère douce et apaisante dans votre salon ou chambre.</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">🕊️</div>
-                <div class="product-content">
-                    <h3 class="product-title">Luminaires poétiques</h3>
-                    <p class="product-description">Suspensions et lampes d'ambiance aux formes organiques, diffusant une lumière tamisée et chaleureuse.</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">🌿</div>
-                <div class="product-content">
-                    <h3 class="product-title">Accessoires nature</h3>
-                    <p class="product-description">Plateaux, porte-bijoux, vide-poches aux lignes courbes inspirées de la nature pour une décoration harmonieuse.</p>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image">💝</div>
-                <div class="product-content">
-                    <h3 class="product-title">Cadeaux sur mesure</h3>
-                    <p class="product-description">Créations personnalisées pour célébrer vos moments précieux : naissances, mariages, anniversaires.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+	<section id="produits" class="container">
+    <h2 class="section-title">Nos créations délicates</h2>
+    <div class="products-grid" id="products-container"></div> <!-- ✅ Ajout de ID -->
+	</section>
 
     <section id="about" class="about">
         <div class="container">
@@ -688,6 +659,9 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSl5rtBY94kiWBeL5yMK9uoKL
       };
     }).filter(p => p.titre && !isNaN(p.prix));
     afficherProduits(produits);
+  });
+  .catch(error => {
+    console.error("Erreur lors du chargement des produits :", error);
   });
 
 function afficherProduits(liste) {
