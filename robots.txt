@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://okette.github.io/josephine-boutique/sitemap.xml
